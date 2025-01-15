@@ -1,5 +1,5 @@
 {
-	"pluginAlias": "eedomusOutlet",
+	"pluginAlias": "teslaWallConnector",
 	"pluginType": "accessory",
 	"schema": {
 		"type": "object",
@@ -11,72 +11,19 @@
 				"default": "",
 				"description": ""
 			},
-			"periph_id": {
-				"title": "eedomus API periph_id for switch channel",
-				"type": "integer",
-				"required": true,
-				"default": "",
-				"description": ""
-			},
-			"periph_id_meter": {
-				"title": "eedomus API periph_id for power meter channel",
-				"type": "integer",
-				"required": false,
-				"default": "",
-				"description": "(Optional) Default : periph_id + 1"
-			},
-			"eedomus_connection": {
-				"title": "Method",
-				"type": "string",
-				"default": "cloud",
-				"oneOf": [
-					{
-						"title": "Cloud",
-						"enum": [
-							"cloud"
-						]
-					},
-					{
-						"title": "IP",
-						"enum": [
-							"ip"
-						]
-					}
-				],
-				"required": true
-			},
-			"eedomus_ip": {
-				"title": "eedomus ip address",
+			"ip_address": {
+				"title": "Wall Connector ip address",
 				"type": "string",
 				"condition": {
-					"functionBody": "return model.eedomus_connection === 'ip';"
+					"functionBody": "return model.wall_connector_connection === 'ip';"
 				}
-			},
-			"api_user": {
-				"title": "eedomus API user",
-				"type": "string",
-				"required": true,
-				"default": "",
-				"description": ""
-			},
-			"api_secret": {
-				"title": "eedomus API secret",
-				"type": "string",
-				"required": true,
-				"default": "",
-				"description": ""
 			},
 			"refreshSeconds": {
 				"title": "Refresh in seconds",
 				"type": "integer",
-				"default": 10,
+				"default": 60,
 				"required": false,
-				"description": "(Optional) Default: 10"
-			},
-			"lock_on": {
-				"title": "Always ON",
-				"type": "boolean",
-				"description": "Avoid accidental shutdown"
+				"description": "(Optional) Default: 60"
 			}
 		}
 	}
