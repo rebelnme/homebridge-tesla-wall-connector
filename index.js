@@ -62,11 +62,11 @@ module.exports = function (homebridge) {
 	FakeGatoHistoryService = FakeGatoHistoryService;
 	inherits(FakeGatoHistoryService, Service);
 
-	homebridge.registerAccessory("homebridge-eedomus-outlet-meter", "eedomusOutlet", eedomusOutlet)
+	homebridge.registerAccessory("homebridge-tesla-wall-connector", "wallConnector", wallConnector)
 }
 
-// function eedomusOutlet
-function eedomusOutlet(log, config) {
+// function wallConnector
+function wallConnector(log, config) {
 
 	// Don't load the plugin if these aren't accessible for any reason
 	if (!log || !config) {
@@ -80,23 +80,9 @@ function eedomusOutlet(log, config) {
 	this.name = config.name;
 	this.displayName = config.name;
 	this.url = config.url;
-	this.refresh = config.refreshSeconds || 10;
-	this.periph_id = config.periph_id;
-	this.periph_id_meter = config.periph_id_meter || this.periph_id + 1;
-	this.eedomus_connection = config.eedomus_connection || "cloud";
-	this.eedomus_ip = config.eedomus_ip;
-	this.api_user = config.api_user;
-	this.api_secret = config.api_secret;
-	this.lock_on = config.lock_on || false;
-	if (this.eedomus_connection == "cloud") {
-		this.get_url = "https://api.eedomus.com/api/get?api_user=" + this.api_user + "&api_secret=" + this.api_secret + "&action=periph.caract&periph_id=" + this.periph_id + "";
-		this.set_url = "https://api.eedomus.com/api/get?api_user=" + this.api_user + "&api_secret=" + this.api_secret + "&action=periph.value&periph_id=" + this.periph_id + "&value=";
-		this.get_url_meter = "https://api.eedomus.com/api/get?api_user=" + this.api_user + "&api_secret=" + this.api_secret + "&action=periph.caract&periph_id=" + this.periph_id_meter + "";
-	} else {
-		this.get_url = "http://" + this.eedomus_ip + "/api/get?api_user=" + this.api_user + "&api_secret=" + this.api_secret + "&action=periph.caract&periph_id=" + this.periph_id + "";
-		this.set_url = "http://" + this.eedomus_ip + "/api/set?api_user=" + this.api_user + "&api_secret=" + this.api_secret + "&action=periph.value&periph_id=" + this.periph_id + "&value=";
-		this.get_url_meter = "http://" + this.eedomus_ip + "/api/get?api_user=" + this.api_user + "&api_secret=" + this.api_secret + "&action=periph.caract&periph_id=" + this.periph_id_meter + "";
-	}
+	this.refresh = config.refreshSeconds || 60;
+	this.ip_address = config.ip_address;
+	this.get_url = "http://" + this.ip_address + "/api/1/vitals";
 	this.UUID = UUIDGen.generate(sprintf("powermeter-%s", config.periph_id));
 	var package = require('./package.json');
 	this.intPower = 0;
@@ -136,7 +122,7 @@ function eedomusOutlet(log, config) {
 	this.informationService
 		.setCharacteristic(Characteristic.Name, this.name)
 		.setCharacteristic(Characteristic.Manufacturer, "Homebridge")
-		.setCharacteristic(Characteristic.Model, "eedomus outlet")
+		.setCharacteristic(Characteristic.Model, "wall connector")
 		.setCharacteristic(Characteristic.FirmwareRevision, package.version)
 		.setCharacteristic(Characteristic.SerialNumber, this.periph_id);
 
@@ -181,7 +167,7 @@ function eedomusOutlet(log, config) {
 }
 
 // getState
-eedomusOutlet.prototype.getState = function (callback) {
+wallConnector.prototype.getState = function (callback) {
 
 	if (this.lock_on) {
 		callback(null, "1");
@@ -221,7 +207,7 @@ eedomusOutlet.prototype.getState = function (callback) {
 			  
 					var json = JSON.parse(data)
 					this.log.debug("JSON: (%s)", json)
-					var state = json.body.last_value == 100 ? "1" : "0"
+					var state = json.contactor_closed == true ? "1" : "0";
 					callback(null, state)
 				} else {
 					this.log("Error getting State: %s : %s",resp.statusCode, resp.statusMessage)
@@ -240,9 +226,9 @@ eedomusOutlet.prototype.getState = function (callback) {
 	}
 }
 
-eedomusOutlet.prototype.getpowerConsumption = function (callback) {
+wallConnector.prototype.getpowerConsumption = function (callback) {
 
-	let url = new URL(this.get_url_meter)
+	let url = new URL(this.get_url)
 	var protocol = (url.protocol == "http:") ? require('http') : require('https')
 	// this.log.debug(url)
 	const options = {
@@ -277,7 +263,7 @@ eedomusOutlet.prototype.getpowerConsumption = function (callback) {
 		  
 				var json = JSON.parse(data)
 				this.log.debug("JSON: (%s)", json)
-				var power = Math.round(json.body.last_value)
+				var power = Math.round(json.grid_v * json.vehicle_current_a)
 				this.value = power
 				this.inUse = power == "0" ? false : true
 				callback(null, power)
@@ -300,7 +286,7 @@ eedomusOutlet.prototype.getpowerConsumption = function (callback) {
 
 
 // set State
-eedomusOutlet.prototype.setState = function (state, callback) {
+wallConnector.prototype.setState = function (state, callback) {
 	if (this.lock_on && !state) {
 		callback();
 		this.lockOn();
@@ -350,12 +336,12 @@ eedomusOutlet.prototype.setState = function (state, callback) {
 }
 
 // Lock ON
-eedomusOutlet.prototype.lockOn = function () {
+wallConnector.prototype.lockOn = function () {
 	setTimeout(() => {
 		this.outlet.getCharacteristic(Characteristic.On).updateValue("1");
 	}, 250);
 }
 
-eedomusOutlet.prototype.getServices = function () {
+wallConnector.prototype.getServices = function () {
 	return [this.informationService, this.powerLoggingService, this.outlet];
 }
