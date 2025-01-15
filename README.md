@@ -34,6 +34,6 @@ The following parameters are supported:
 ```
 
 ## Credits
-[https://github.com/LeJeko/homebridge-eedomus-outlet-meter](https://github.com/LeJeko/homebridge-eedomus-outlet-meter)
+[https://github.com/LeJeko/homebridge-eedomus-outlet-meter](https://github.com/LeJeko/homebridge-eedomus-outlet-meter) 
 [https://github.com/t-j-n/homebridge-mystromoutlet](https://github.com/t-j-n/homebridge-mystromoutlet)  
 [https://github.com/simont77/homebridge-myhome](https://github.com/simont77/homebridge-myhome)
