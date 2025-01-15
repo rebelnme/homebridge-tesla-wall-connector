@@ -4,7 +4,7 @@
 
 <span align="center">
 
-# homebridge-eedomus-outlet-meter
+# homebridge-tesla-wall-connector
 
 [![npm](https://img.shields.io/npm/v/homebridge-tesla-wall-connector.svg)](https://www.npmjs.com/package/homebridge-tesla-wall-connector) [![npm](https://img.shields.io/npm/dt/homebridge-tesla-wall-connector.svg)](https://www.npmjs.com/package/homebridge-tesla-wall-connector) [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg)](https://www.paypal.com/donate?hosted_button_id=LU7BSTQF3DEZQ)
 
@@ -17,7 +17,7 @@ Appears as a regular outlet with _"in use"_ state in Home app.
 
 ## Installation
 ```shell
-npm install -g homebridge-eedomus-outlet-meter
+npm install -g homebridge-tesla-wall-connector
 ```
 ## Configuration
 
@@ -28,14 +28,8 @@ The following parameters are supported:
 {
    "accessory": "eedomusOutlet",       // mandatory
    "name": "TV power",                 // name in HomeKit
-   "periph_id": 123456,                // eedomus API periph_id
-   "periph_id_meter": 123457,          // (Optional) Default : periph_id + 1
-   "eedomus_connection": "ip",         // connection method (Default: "cloud")
-   "eedomus_ip": "1.2.3.4",            // eedomus ip address
-   "api_user": "XXXXXX",               // eedomus API user
-   "api_secret": "YYYYYYYYYYYYYYYY",   // eedomus API secret
-   "refreshSeconds": 5,                // (Optional) Default: 10
-   "lock_on": true                     // (Optional) Default: false
+   "ip_address": "1.2.3.4",            // wall connector ip address
+   "refreshSeconds": 60,                // (Optional) Default: 10
 }
 ```
 
