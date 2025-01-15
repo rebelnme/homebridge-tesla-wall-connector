@@ -6,16 +6,14 @@
 
 # homebridge-eedomus-outlet-meter
 
-[![npm](https://img.shields.io/npm/v/homebridge-eedomus-outlet-meter.svg)](https://www.npmjs.com/package/homebridge-eedomus-outlet-meter) [![npm](https://img.shields.io/npm/dt/homebridge-eedomus-outlet-meter.svg)](https://www.npmjs.com/package/homebridge-eedomus-outlet-meter) [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg)](https://www.paypal.com/donate?hosted_button_id=LU7BSTQF3DEZQ)
+[![npm](https://img.shields.io/npm/v/homebridge-tesla-wall-connector.svg)](https://www.npmjs.com/package/homebridge-tesla-wall-connector) [![npm](https://img.shields.io/npm/dt/homebridge-tesla-wall-connector.svg)](https://www.npmjs.com/package/homebridge-tesla-wall-connector) [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg)](https://www.paypal.com/donate?hosted_button_id=LU7BSTQF3DEZQ)
 
 </span>
 
 ## Description
-A simple Homebridge plugin for eddomus outlets providing data to Elgato Eve app using Fakegato-History.
+A simple Homebridge plugin for Tesla Wall Connectors to provide power usage data to Elgato Eve app using Fakegato-History.
 Appears as a regular outlet with _"in use"_ state in Home app.
 
-eedomus box create two separate periph_id for "state" and "power metering". Usually the second one was the next periph_id but you can change it if needed.
-You can avoid accidental shutdown, with the "lock_on" option.
 
 ## Installation
 ```shell
