@@ -21,7 +21,7 @@ npm install -g homebridge-tesla-wall-connector
 ```
 ## Configuration
 
-This plugin needs one accessory per outlet.
+This plugin needs the ip address of the wall connector.
 The following parameters are supported:
 
 ```
