@@ -1,22 +1,22 @@
 {
-	"name": "homebridge-eedomus-outlet-meter",
+	"name": "homebridge-tesla-wall-connector",
 	"version": "1.2.4",
-	"description": "Switch Outlet from eedomus and history with fakegato-history",
+	"description": "Tesla Wall Connector Outlet and history with fakegato-history",
 	"license": "MIT",
 	"keywords": [
 		"homebridge-plugin",
 		"outlet",
-		"eedomus",
+		"telsa",
 		"power",
 		"history",
 		"fakegato"
 	],
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/LeJeko/homebridge-eedomus-outlet-meter.git"
+		"url": "https://github.com/rebelnme/homebridge-tesla-wall-connector.git"
 	},
 	"bugs": {
-		"url": "https://github.com/LeJeko/homebridge-eedomus-outlet-meter/issues"
+		"url": "https://github.com/rebelnme/homebridge-tesla-wall-connector/issues"
 	},
 	"engines": {
 		"node": ">=10.17.0",
