@@ -29,7 +29,7 @@ The following parameters are supported:
    "accessory": "eedomusOutlet",       // mandatory
    "name": "TV power",                 // name in HomeKit
    "ip_address": "1.2.3.4",            // wall connector ip address
-   "refreshSeconds": 60,                // (Optional) Default: 10
+   "refreshSeconds": 60,                // (Optional) Default: 60
 }
 ```
 
